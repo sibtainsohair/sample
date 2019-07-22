@@ -26,6 +26,7 @@ public class CustomerController {
 	}
 	
 	@RequestMapping("/customers")
+	@CrossOrigin(origins = "*")
 	public List<Customer> getcustomers() {
 		List<Customer> customers = new ArrayList<>();
 		cusrepo.findAll()
@@ -34,16 +35,15 @@ public class CustomerController {
 	}
 	
 	@RequestMapping("/customer/{id}")
+	@CrossOrigin(origins = "*")
 	public Optional<Customer> getcustomer(@PathVariable int id) {
-		//int myid=Integer.parseInt(id);
 		return cusrepo.findById(id);
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, value = "/customer")
 	@CrossOrigin(origins = "*")
-	public String addcustomer(@RequestBody Customer customer) {
+	public void addcustomer(@RequestBody Customer customer) {
 		cusrepo.save(customer);
-		return "successful";
 	}
 
 }
