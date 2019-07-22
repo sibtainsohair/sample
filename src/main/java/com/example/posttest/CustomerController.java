@@ -8,7 +8,9 @@ import javax.xml.bind.ParseConversionEvent;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -31,9 +33,15 @@ public class CustomerController {
 	}
 	
 	@RequestMapping("/customer/{id}")
-	public Optional<Customer> getcustomer(@PathVariable String id) {
-		int myid=Integer.parseInt(id);
-		return cusrepo.findById(myid);
+	public Optional<Customer> getcustomer(@PathVariable int id) {
+		//int myid=Integer.parseInt(id);
+		return cusrepo.findById(id);
+	}
+	
+	@RequestMapping(method = RequestMethod.POST, value = "/customer")
+	public String addcustomer(@RequestBody Customer customer) {
+		cusrepo.save(customer);
+		return "successful";
 	}
 
 }
